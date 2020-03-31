@@ -1,3 +1,9 @@
+
+***********************
+Speculative Fiction Bot
+***********************
+
+
 This is a Reddit bot that continually scans comments across the entire site for mentions of science fiction and 
 fantasy books. If an SF/F book title is detected, the bot checks if the author's name is also present in the comment. 
 
