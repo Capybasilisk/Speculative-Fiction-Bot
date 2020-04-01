@@ -72,8 +72,8 @@ def speculative():
                                  """speculative-fiction-bot) ^| [^(Feedback)](https"""
                                  """://www.reddit.com/message/compose?to=Capybasilisk&"""
                                  """subject=Robot) ^| [^(Programmer)](https://reddit.com"""
-                                 """/u/capybasilisk) ^| ^Downvote ^To ^Remove ^| """
-                                 """^Version ^1.4.0 ^| ^(Support Robot Rights!)""")
+                                 """/u/capybasilisk) ^| ^(Downvote To Remove) ^| """
+                                 """^(Version 1.4.0) ^| ^(Support Robot Rights!)""")
 
 
                     comment.reply(
