@@ -65,25 +65,26 @@ def speculative():
                     and any(
                         item in jdict["title"].lower() for item in audio)
                     and all(
-                        item in jdict["title"].lower() for item in author_format)):
+                        item in jdict["title"].lower() for item in author_format))
 
                     
-                    signature = ("""[^(Source Code)](https://github.com/capybasilisk/"""
-                                 """speculative-fiction-bot) ^| [^(Feedback)](https"""
-                                 """://www.reddit.com/message/compose?to=Capybasilisk&"""
-                                 """subject=Robot) ^| [^(Programmer)](https://reddit.com"""
-                                 """/u/capybasilisk) ^| ^(Downvote To Remove) ^| """
-                                 """^(Version 1.4.0) ^| ^(Support Robot Rights!)""")
-
+                    saw_the_sign = (
+                        """[^(Source Code)](bit.ly/2R5DLdd) """
+                        """^| [^(Feedback)](bit.ly/3dUw17E) """
+                        """^| [^(Programmer)](bit.ly/2R6CQcC) """
+                        """^| ^(Downvote To Remove) """ 
+                        """^| ^(Version 1.4.0) """
+                        """^| ^(Support Robot Rights!)""")
+                    
 
                     comment.reply(
-                        f"Hi. You just mentioned *{card[0]}* by " 
-                        f"{card[1]}.\n\nI've found an audiobook of "   
-                        "that novel on YouTube. You can listen to it here:"
-                        f"\n\n[YouTube | {jdict['title']}]"
-                        f"({jdict['webpage_url']})\n\n*I\'m a bot that " 
-                        "searches YouTube for science fiction and fantasy "  
-                        f"audiobooks.*\n***\n{signature}")
+                        f"""Hi. You just mentioned *{card[0]}* by """ 
+                        f"""{card[1]}.\n\nI've found an audiobook of """   
+                        """that novel on YouTube. You can listen to it here:"""
+                        f"""\n\n[YouTube | {jdict['title']}]"""
+                        f"""({jdict['webpage_url']})\n\n*I\'m a bot that """ 
+                        """searches YouTube for science fiction and fantasy """  
+                        f"""audiobooks.*\n***\n{saw_the_sign}""")
 
                     
                     responded.append(comment.submission.id)
@@ -142,6 +143,7 @@ def speculative():
 
 
 
+
 def eventlogger(event):
     
     eventlogger = loguru.logger
@@ -158,6 +160,7 @@ def eventlogger(event):
 
 
             
+
 if __name__ == "__main__":
 
     while True:
@@ -174,5 +177,5 @@ if __name__ == "__main__":
 
 
 
-
             
+
