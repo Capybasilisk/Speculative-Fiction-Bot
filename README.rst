@@ -5,7 +5,8 @@ Speculative Fiction Bot
 
 
 This is a Reddit bot that continually scans comments across the entire site for mentions of science fiction and 
-fantasy books. If an SF/F book title is detected, the bot checks if the author's name is also present in the comment. 
+fantasy books. If an SF/F book title is detected, the bot checks if the author's name is also present in the comment in
+order to reduce false positives. 
 
 If both these conditions are met, the bot searches YouTube for an audiobook of the mentioned title, then replies
 with a link to it should one be found.
