@@ -1,4 +1,3 @@
-
 import praw
 import clevercsv
 import subprocess 
@@ -6,6 +5,7 @@ import youtube_dl
 import json
 import pendulum 
 import loguru
+import os
 import time
 import collections
 
@@ -14,28 +14,44 @@ import collections
 
 def speculative():
     
-    """Uses scraped data from the Internet Speculative Fiction Database to search 
-    YouTube for SF/Fantasy audiobooks. Title/author pairs read 
-    from "isfdb_catalog.csv" file.    
+    """Uses scraped data from the Internet Speculative Fiction Database to 
+    search YouTube for SF/Fantasy audiobooks. Title/author pairs read from 
+    "isfdb_catalog.csv" file.    
     """
     
     
     bot = praw.Reddit(
-            client_id = "client_id",
-            client_secret = "client_secret",
-            username = "username",
-            password = "password",
-            user_agent = "user_agent")
+            client_id = os.environ.get(
+                "CLIENT_ID"),
+            client_secret = os.environ.get(
+                "CLIENT_SECRET"),
+            username = os.environ.get(
+                "USERNAME"),
+            password = os.environ.get(
+                "PASSWORD"),
+            user_agent = os.environ.get(
+                "USER_AGENT"))
                        
     
-    comments = bot.subreddit("all").stream.comments(skip_existing = True)
+    comments = bot.subreddit(
+        "all").stream.comments(
+        skip_existing = True)
 
-    responded = collections.deque(maxlen = 100)
+    responded = collections.deque(
+        maxlen = 100)
 
-    with open("isfdb_catalog.csv", "r", encoding = "UTF-8") as isfdb_catalog: 
-      isfdb_catalog = clevercsv.reader(isfdb_catalog)
+    with open(
+        "isfdb_catalog.csv", 
+        "r", 
+        encoding = "UTF-8") as isfdb_catalog: 
+      
+      isfdb_catalog = clevercsv.reader(
+        isfdb_catalog)
 
-      catalog = [[row[0],row[1]] for row in isfdb_catalog if len(row) > 1]
+      catalog = [
+        [row[0],row[1]] 
+        for row in isfdb_catalog 
+        if len(row) > 1]
     
     
     for comment in comments:
@@ -49,23 +65,31 @@ def speculative():
                 and not comment.subreddit.user_is_banned):
         
                 info = subprocess.check_output(
-                    ["youtube-dl", "-i", "-j", 
+                    ["youtube-dl", 
+                    "-i", 
+                    "-j", 
                     f"ytsearch: {card[0]} {card[1]} audiobook"])
                 
                 jdict = json.loads(info)
 
-                audio = ["audiobook", "audio book"]
+                audio = [
+                    "audiobook", 
+                    "audio book"]
 
                 author_format = [
-                name.lower() for name in card[1].split(" ") if len(name) >= 3]
+                name.lower() for name in card[1].split(" ") 
+                if len(name) >= 3]
 
                 if (
                     jdict["duration"] > 10800 
-                    and card[0].lower() in jdict["title"].lower()
+                    and card[0].lower() in jdict[
+                    "title"].lower()
                     and any(
-                        item in jdict["title"].lower() for item in audio)
+                        item in jdict[
+                        "title"].lower() for item in audio)
                     and all(
-                        item in jdict["title"].lower() for item in author_format))
+                        item in jdict[
+                        "title"].lower() for item in author_format))
 
                     
                     saw_the_sign = (
@@ -87,12 +111,19 @@ def speculative():
                         f"""audiobooks.*\n***\n{saw_the_sign}""")
 
                     
-                    responded.append(comment.submission.id)
+                    responded.append(
+                        comment.submission.id)
 
-                    with open("activity.csv", "a", encoding = "UTF-8") as actlog:
-                        activity = clevercsv.writer(actlog)
+                    with open(
+                        "activity.csv", 
+                        "a", 
+                        encoding = "UTF-8") as actlog:
+
+                        activity = clevercsv.writer(
+                            actlog)
                         
                         if actlog.tell() == 0:
+
                             activity.writerow(
                                 ["Book",
                                 "Comment", 
@@ -111,13 +142,20 @@ def speculative():
                     
                     break        
 
-        if pendulum.now().to_time_string().endswith("0:00"):
-            replies = bot.user.me().comments.new(limit=100)
+        if pendulum.now().to_time_string().endswith(
+            "0:00"):
+            
+            replies = bot.user.me().comments.new(
+                limit=100)
             
             for reply in replies:
                 if reply.score < 0:
                     
-                    with open("deleted.csv", "a", encoding = "UTF-8") as removed:
+                    with open(
+                        "deleted.csv", 
+                        "a", 
+                        encoding = "UTF-8") as removed:
+
                         deleted = clevercsv.writer(removed)
                         
                         if removed.tell() == 0:
@@ -177,5 +215,4 @@ if __name__ == "__main__":
 
 
 
-            
 
