@@ -93,9 +93,9 @@ def speculative():
 
                     
                     saw_the_sign = (
-                        """[^(Source Code)](bit.ly/2R5DLdd) """
-                        """^| [^(Feedback)](bit.ly/3dUw17E) """
-                        """^| [^(Programmer)](bit.ly/2R6CQcC) """
+                        """[^(Source Code)](https://capybasilisk.com/posts/2020/04/speculative-fiction-bot/) """
+                        """^| [^(Feedback)](https://www.reddit.com/message/compose?to=Capybasilisk&subject=Robot) """
+                        """^| [^(Programmer)](https://www.reddit.com/u/capybasilisk) """
                         """^| ^(Downvote To Remove) """ 
                         """^| ^(Version 1.4.0) """
                         """^| ^(Support Robot Rights!)""")
