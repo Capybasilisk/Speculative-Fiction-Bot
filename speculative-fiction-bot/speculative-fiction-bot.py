@@ -81,7 +81,8 @@ def speculative():
                 if len(name) >= 3]
 
                 if (
-                    jdict["duration"] > 10800 
+                    jdict["duration"] > 10800
+                    and jdict["average_rating"] > 4.0
                     and card[0].lower() in jdict[
                     "title"].lower()
                     and any(
