@@ -93,9 +93,12 @@ def speculative():
 
                     
                     saw_the_sign = (
-                        """[^(Source Code)](https://capybasilisk.com/posts/2020/04/speculative-fiction-bot/) """
-                        """^| [^(Feedback)](https://www.reddit.com/message/compose?to=Capybasilisk&subject=Robot) """
-                        """^| [^(Programmer)](https://www.reddit.com/u/capybasilisk) """
+                        """[^(Source Code)](https://capybasilisk.com/posts/"""
+                        """2020/04/speculative-fiction-bot/) """
+                        """^| [^(Feedback)](https://www.reddit.com/message/"""
+                        """compose?to=Capybasilisk&subject=Robot) """
+                        """^| [^(Programmer)](https://www.reddit.com/u/"""
+                        """capybasilisk) """
                         """^| ^(Downvote To Remove) """ 
                         """^| ^(Version 1.4.0) """
                         """^| ^(Support Robot Rights!)""")
@@ -104,11 +107,11 @@ def speculative():
                     comment.reply(
                         f"""Hi. You just mentioned *{card[0]}* by """ 
                         f"""{card[1]}.\n\nI've found an audiobook of """   
-                        """that novel on YouTube. You can listen to it here:"""
-                        f"""\n\n[YouTube | {jdict['title']}]"""
+                        """that novel on YouTube. You can listen to it here"""
+                        f""":\n\n[YouTube | {jdict['title']}]"""
                         f"""({jdict['webpage_url']})\n\n*I\'m a bot that """ 
-                        """searches YouTube for science fiction and fantasy """  
-                        f"""audiobooks.*\n***\n{saw_the_sign}""")
+                        """searches YouTube for science fiction and fantasy"""  
+                        f""" audiobooks.*\n***\n{saw_the_sign}""")
 
                     
                     responded.append(
