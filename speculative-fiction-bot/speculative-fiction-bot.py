@@ -356,7 +356,7 @@ class SFF_Robot:
 
 
 
-  if __name__ == "__main__":
+if __name__ == "__main__":
   
   while True:
     
@@ -372,5 +372,5 @@ class SFF_Robot:
       
       time.sleep(1)
       
-      continue
-
+      continue  
+ 
