@@ -32,6 +32,8 @@ class SFF_Robot:
 
   def authenticate(self):
     
+    """ Log bot into Reddit. """
+    
      return praw.Reddit(
                 client_id = os.environ.get(
                     "CLIENT_ID"),
@@ -46,6 +48,13 @@ class SFF_Robot:
      
 
   def shelf(self):
+    
+    """ 
+    
+    Load CSV of scraped data from Speculative Fiction Database
+    into program memory as a list of title/author pairs. 
+    
+    """
 
     with open(
       "isfdb_catalog.csv", 
@@ -62,21 +71,34 @@ class SFF_Robot:
     
   def get_info(self, card):
 
-     try:
-            
-         info = subprocess.check_output(
+      """ 
+      Search Youtube for title, author, and "audiobook". Retrieve details
+      of top result as a JSON string and load it into program memory.
+
+      """
+
+      try:
+
+        info = subprocess.check_output(
              ["youtube-dl", "-i", "-j",
              f"ytsearch: {card[0]} {card[1]} audiobook"])
 
-         self.details = json.loads(info)
-        
-     except:        
-             
-         return
-            
+        self.details = json.loads(info)
 
+      except:
+
+        return
+  
   
   def core(self):
+    
+    """
+    
+    Main function. Watch Reddit comment stream for title + author mentions.
+    Check YouTube for audiobook and reply with link if suitable one found.
+    
+    """
+    
     
     comments = self.bot.subreddit(
             "all").stream.comments(
@@ -147,59 +169,59 @@ class SFF_Robot:
                     comment.submission.id)
                 
                 with open(
-                            "activity.csv", 
-                            "a", 
-                            encoding = "UTF-8") as actlog:
+                          "activity.csv", 
+                          "a", 
+                          encoding = "UTF-8") as actlog:
 
-                            activity = clevercsv.writer(
-                                actlog)
-                            
-                            if actlog.tell() == 0:
+                          activity = clevercsv.writer(
+                              actlog)
 
-                                activity.writerow(
-                                    ["Book",
-                                    "Comment", 
-                                    "Author", 
-                                    "Thread", 
-                                    "Subreddit", 
-                                    "Time"])
+                          if actlog.tell() == 0:
 
-                            activity.writerow(
-                                [f"{card[0]} by {card[1]}",
-                                f"{comment.body}",
-                                f"{comment.author}",
-                                f"{comment.submission.title}",
-                                f"{comment.subreddit}",
-                                f"{pendulum.now().to_datetime_string()}"])
+                              activity.writerow(
+                                  ["Book",
+                                  "Comment", 
+                                  "Author", 
+                                  "Thread", 
+                                  "Subreddit", 
+                                  "Time"])
+
+                          activity.writerow(
+                              [f"{card[0]} by {card[1]}",
+                              f"{comment.body}",
+                              f"{comment.author}",
+                              f"{comment.submission.title}",
+                              f"{comment.subreddit}",
+                              f"{pendulum.now().to_datetime_string()}"])
                 
                 self.details = None
                 
                 break
             
             break   
-
-      self.tidy()
+      
+      if pendulum.now().to_time_string().endswith(
+        "0:00"):
+        
+        self.tidy()
 
                  
  
   def tidy(self):
       
-      if pendulum.now().to_time_string().endswith(
-                "0:00"):
-        
-        replies = self.bot.user.me().comments.new(
-                    limit=100)
+      """ Remove downvoted comments to comply with Rediquette. """
+    
+      replies = self.bot.user.me().comments.new(
+                limit=100)
                 
-        for reply in replies:
+      for reply in replies:
+          
+          if reply.score < 0:
             
-            if reply.score < 0:
-              
-              with open(
-                "deleted.csv", "a", 
-                encoding = "UTF-8") as removed:
+            with open("deleted.csv", "a", encoding = "UTF-8") as removed:
                 
                 deleted = clevercsv.writer(removed)
-                    
+                
                 if removed.tell() == 0:
                     deleted.writerow(
                     ["Comment", 
@@ -211,16 +233,22 @@ class SFF_Robot:
                     
                 deleted.writerow(
                     [f"{reply.body}", 
-                      f"{reply.parent().body}", 
-                      f"{reply.submission.title}", 
-                      f"{reply.subreddit}", 
-                      f"{pendulum.from_timestamp(reply.created_utc)}", 
-                      f"{reply.score}"])
+                        f"{reply.parent().body}", 
+                        f"{reply.submission.title}", 
+                        f"{reply.subreddit}", 
+                        f"{pendulum.from_timestamp(reply.created_utc)}", 
+                        f"{reply.score}"])
 
                 reply.delete()
 
   
   def eventlogger(self, event):
+    
+    """
+    
+    Write unexpected error messages to file before program is restarted.
+    
+    """
     
     eventlogger = loguru.logger
     
@@ -327,7 +355,8 @@ class SFF_Robot:
 
 
 
-if __name__ == "__main__":
+
+  if __name__ == "__main__":
   
   while True:
     
@@ -344,3 +373,4 @@ if __name__ == "__main__":
       time.sleep(1)
       
       continue
+
