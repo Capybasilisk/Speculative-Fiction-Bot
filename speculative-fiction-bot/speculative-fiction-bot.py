@@ -43,8 +43,8 @@ class SFF_Robot:
                     "PASSWORD"),
                 user_agent = os.environ.get(
                     "USER_AGENT"))
-    
-  
+     
+
   def shelf(self):
 
     with open(
@@ -61,34 +61,18 @@ class SFF_Robot:
     
     
   def get_info(self, card):
-      
-      attempts = 10
-      
-      while True:
-          
-          try:
+
+     try:
             
-            info = subprocess.check_output(
-                ["youtube-dl", "-i", "-j",
-                f"ytsearch: {card[0]} {card[1]} audiobook"])
+         info = subprocess.check_output(
+             ["youtube-dl", "-i", "-j",
+             f"ytsearch: {card[0]} {card[1]} audiobook"])
 
-            self.details = json.loads(info)
-
-            break
+         self.details = json.loads(info)
         
-          except:
-              
-              time.sleep(1)
-            
-              attempts -= 1
-            
-              if attempts > 0:
-                  
-                  continue
-              
-              else:
-                
-                return
+     except:        
+             
+         return
             
 
   
@@ -112,6 +96,10 @@ class SFF_Robot:
             and not comment.subreddit.user_is_banned):
 
             self.get_info(card)
+
+            if not self.details:
+                
+                break
 
             audio = [
                 "audiobook", 
@@ -185,6 +173,8 @@ class SFF_Robot:
                                 f"{pendulum.now().to_datetime_string()}"])
                 
                 self.details = None
+                
+                break
             
             break   
 
@@ -354,4 +344,3 @@ if __name__ == "__main__":
       time.sleep(1)
       
       continue
-
