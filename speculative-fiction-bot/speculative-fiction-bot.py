@@ -34,17 +34,17 @@ class SFF_Robot:
     
     """ Log bot into Reddit. """
     
-     return praw.Reddit(
-                client_id = os.environ.get(
-                    "CLIENT_ID"),
-                client_secret = os.environ.get(
-                    "CLIENT_SECRET"),
-                username = os.environ.get(
-                    "USERNAME"),
-                password = os.environ.get(
-                    "PASSWORD"),
-                user_agent = os.environ.get(
-                    "USER_AGENT"))
+    return praw.Reddit(
+         client_id = os.environ.get(
+             "CLIENT_ID"),
+         client_secret = os.environ.get(
+             "CLIENT_SECRET"),
+         username = os.environ.get(
+             "USERNAME"),
+         password = os.environ.get(
+             "PASSWORD"),
+         user_agent = os.environ.get(
+             "USER_AGENT"))
      
 
   def shelf(self):
@@ -373,4 +373,3 @@ if __name__ == "__main__":
       time.sleep(1)
       
       continue  
- 
