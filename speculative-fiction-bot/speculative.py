@@ -29,6 +29,7 @@ class SFF_Robot:
 
     self.details = None
 
+
   @property
   def authenticate(self):
     
@@ -46,6 +47,7 @@ class SFF_Robot:
          user_agent = os.environ.get(
              "USER_AGENT"))
      
+
   @property
   def shelf(self):
     
