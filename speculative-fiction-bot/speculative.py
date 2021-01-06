@@ -20,16 +20,16 @@ class SFF_Robot:
 
   def __init__(self):
 
-    self.bot = self.authenticate()
+    self.bot = self.authenticate
     
-    self.catalog = self.shelf()
+    self.catalog = self.shelf
     
     self.responded = collections.deque(
       maxlen = 100) 
 
     self.details = None
 
-
+  @property
   def authenticate(self):
     
     """ Log bot into Reddit. """
@@ -46,7 +46,7 @@ class SFF_Robot:
          user_agent = os.environ.get(
              "USER_AGENT"))
      
-
+  @property
   def shelf(self):
     
     """ 
