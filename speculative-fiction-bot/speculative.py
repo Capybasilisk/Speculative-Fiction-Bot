@@ -372,6 +372,6 @@ if __name__ == "__main__":
       
       run_robot.eventlogger(event)
       
-      time.sleep(1)
+      time.sleep(600)
       
       continue  
