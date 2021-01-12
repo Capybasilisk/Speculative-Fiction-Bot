@@ -114,8 +114,8 @@ class SFF_Robot:
       for card in self.catalog:
         
         if (
-            card[0].lower() in text
-            and card[1].lower() in text
+            card[1].lower() in text
+            and card[0].lower() in text
             and not comment.submission.id in self.responded
             and not comment.subreddit.user_is_banned):
 
@@ -372,6 +372,6 @@ if __name__ == "__main__":
       
       run_robot.eventlogger(event)
       
-      time.sleep(1)
+      time.sleep(600)
       
       continue  
