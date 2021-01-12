@@ -74,6 +74,7 @@ class SFF_Robot:
   def get_info(self, card):
 
       """ 
+      
       Search Youtube for title, author, and "audiobook". Retrieve details
       of top result as a JSON string and load it into program memory.
 
@@ -269,6 +270,7 @@ class SFF_Robot:
   def librarian():
         
         """
+        
         Scrapes metadata of science fiction and fantasy literary works 
         from The Internet Speculative Fiction Database and stores them in 
         a CSV file. If site structure changes significantly, code may stop 
@@ -375,3 +377,8 @@ if __name__ == "__main__":
       time.sleep(600)
       
       continue  
+  
+  
+  
+  
+  
